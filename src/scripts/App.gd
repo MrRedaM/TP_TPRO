@@ -59,6 +59,8 @@ func _on_GenerateButton_pressed():
 		var gain = rand_range(min_gain, max_gain)
 		
 		add_object(object_name, weight, gain)
+	
+	GenerationNumberSpin.value = 1
 
 
 func _on_DeleteAllButton_pressed():
