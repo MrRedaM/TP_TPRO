@@ -1,4 +1,4 @@
-extends Panel
+extends ColorRect
 
 export var object_name : String
 export var weight : int

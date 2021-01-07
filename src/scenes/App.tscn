@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/fonts/title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/scripts/App.gd" type="Script" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://src/scenes/AddObjectDialog.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/scenes/GenerationSettingsDialog.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/icons/bag(1).svg" type="Texture" id=10]
+[ext_resource path="res://src/styles/main_button_style.tres" type="StyleBox" id=11]
+[ext_resource path="res://src/styles/main_buttion_hover.tres" type="StyleBox" id=12]
 
 [node name="App" type="Control"]
 anchor_right = 1.0
@@ -71,7 +73,7 @@ text = "Sac à dos"
 [node name="TextureRect" type="TextureRect" parent="Bag/VBoxContainer"]
 margin_top = 64.0
 margin_right = 512.0
-margin_bottom = 542.0
+margin_bottom = 540.0
 size_flags_vertical = 3
 texture = ExtResource( 10 )
 expand = true
@@ -82,12 +84,36 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="Bag/VBoxContainer/TextureRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="Bag/VBoxContainer/TextureRect/MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 496.0
+margin_bottom = 460.0
+color = Color( 0, 0, 0, 0.196078 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Bag/VBoxContainer/TextureRect/MarginContainer/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BagObjectList" type="VBoxContainer" parent="Bag/VBoxContainer/TextureRect/MarginContainer/ColorRect/ScrollContainer"]
+margin_right = 480.0
+margin_bottom = 444.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="MarginContainer2" type="MarginContainer" parent="Bag/VBoxContainer"]
-margin_top = 542.0
+margin_top = 540.0
 margin_right = 512.0
 margin_bottom = 600.0
 custom_constants/margin_right = 16
@@ -99,8 +125,12 @@ custom_constants/margin_bottom = 16
 margin_left = 16.0
 margin_top = 8.0
 margin_right = 496.0
-margin_bottom = 42.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 11 )
+custom_styles/normal = ExtResource( 11 )
 custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Remplir le sac"
 
 [node name="Objects" type="ColorRect" parent="."]
@@ -179,7 +209,7 @@ margin_left = 16.0
 margin_right = 496.0
 margin_bottom = 478.0
 size_flags_vertical = 3
-color = Color( 0.172549, 0.156863, 0.156863, 1 )
+color = Color( 1, 1, 1, 0.117647 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Objects/VBoxContainer/MarginContainer3/MarginContainer2"]
 anchor_right = 1.0
