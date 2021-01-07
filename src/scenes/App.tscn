@@ -1,0 +1,197 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/fonts/title.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/scripts/App.gd" type="Script" id=2]
+[ext_resource path="res://assets/fonts/normal_large.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/icons/settings_normal.png" type="Texture" id=4]
+[ext_resource path="res://assets/icons/add_hover.png" type="Texture" id=5]
+[ext_resource path="res://assets/icons/add_normal.png" type="Texture" id=6]
+[ext_resource path="res://assets/icons/settings_hover.png" type="Texture" id=7]
+[ext_resource path="res://src/scenes/AddObjectDialog.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/scenes/GenerationSettingsDialog.tscn" type="PackedScene" id=9]
+
+[node name="App" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bag" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureRect" type="TextureRect" parent="Bag"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Objects" type="ColorRect" parent="."]
+anchor_bottom = 1.0
+margin_right = 500.0
+color = Color( 0.0941176, 0.0823529, 0.0823529, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Objects"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Objects/VBoxContainer"]
+margin_right = 500.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 20
+custom_constants/margin_top = 10
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Objects/VBoxContainer/MarginContainer"]
+margin_left = 20.0
+margin_top = 10.0
+margin_right = 480.0
+margin_bottom = 50.0
+
+[node name="Label" type="Label" parent="Objects/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_right = 110.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+text = "Objets"
+align = 1
+
+[node name="ObjetsNumber" type="Label" parent="Objects/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 114.0
+margin_right = 158.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+text = "(0)"
+
+[node name="Control" type="Control" parent="Objects/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 162.0
+margin_right = 424.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="AddObjectButton" type="TextureButton" parent="Objects/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 428.0
+margin_top = 4.0
+margin_right = 460.0
+margin_bottom = 36.0
+mouse_default_cursor_shape = 2
+size_flags_vertical = 4
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+
+[node name="MarginContainer3" type="MarginContainer" parent="Objects/VBoxContainer"]
+margin_top = 64.0
+margin_right = 500.0
+margin_bottom = 542.0
+size_flags_vertical = 3
+custom_constants/margin_right = 20
+custom_constants/margin_left = 20
+
+[node name="MarginContainer2" type="ColorRect" parent="Objects/VBoxContainer/MarginContainer3"]
+margin_left = 20.0
+margin_right = 480.0
+margin_bottom = 478.0
+size_flags_vertical = 3
+color = Color( 0.172549, 0.156863, 0.156863, 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Objects/VBoxContainer/MarginContainer3/MarginContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+follow_focus = true
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ObjectList" type="VBoxContainer" parent="Objects/VBoxContainer/MarginContainer3/MarginContainer2/ScrollContainer"]
+margin_right = 460.0
+margin_bottom = 478.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="Objects/VBoxContainer"]
+margin_top = 546.0
+margin_right = 500.0
+margin_bottom = 600.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 10
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Objects/VBoxContainer/MarginContainer2"]
+margin_left = 20.0
+margin_top = 10.0
+margin_right = 480.0
+margin_bottom = 44.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Button2" type="Button" parent="Objects/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_right = 170.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+text = "Tout supprimer"
+
+[node name="Control" type="Control" parent="Objects/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 180.0
+margin_right = 236.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+
+[node name="GenerationSettingsButton" type="TextureButton" parent="Objects/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 246.0
+margin_top = 4.0
+margin_right = 272.0
+margin_bottom = 30.0
+mouse_default_cursor_shape = 2
+size_flags_vertical = 4
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 7 )
+
+[node name="SpinBox" type="SpinBox" parent="Objects/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 282.0
+margin_right = 356.0
+margin_bottom = 34.0
+min_value = 1.0
+max_value = 1e+07
+value = 1.0
+align = 1
+
+[node name="GenerateButton" type="Button" parent="Objects/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 366.0
+margin_right = 460.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+text = "Générer"
+
+[node name="AddObjectDialog" parent="." instance=ExtResource( 8 )]
+visible = false
+
+[node name="GenerationSettings" parent="." instance=ExtResource( 9 )]
+visible = false
+[connection signal="pressed" from="Objects/VBoxContainer/MarginContainer/HBoxContainer/AddObjectButton" to="." method="_on_AddObjectButton_pressed"]
+[connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/GenerationSettingsButton" to="." method="_on_GenerationSettingsButton_pressed"]
