@@ -7,15 +7,19 @@ onready var AddObjectDialog = $AddObjectDialog
 onready var GenerationSettingsDialog = $GenerationSettings
 onready var GenerationNumberSpin = $Objects/VBoxContainer/MarginContainer2/HBoxContainer/GenerationNumber
 onready var ObjectsNumberLabel = $Objects/VBoxContainer/MarginContainer/HBoxContainer/ObjetsNumber
+onready var BagObjectList = $Bag/VBoxContainer/TextureRect/MarginContainer/ColorRect/ScrollContainer/BagObjectList
 
 var object_count = 1
 var objects_number = 0
 
 func add_object(objectName, weight, gain):
 	var object = Objet.instance()
+	object.id = object_count
 	object.object_name = objectName
 	object.weight = weight
 	object.gain = gain
+	object.connect("put_in_bag", self, "add_to_bag")
+	object.connect("remove_from_bag", self, "remove_from_bag")
 	ObjectList.add_child(object)
 	object_count += 1
 	objects_number += 1
@@ -25,6 +29,24 @@ func delete_object(object) :
 	object.queue_free()
 	objects_number -= 1
 	ObjectsNumberLabel.text = "(" + String(objects_number) + ")"
+
+func add_to_bag(object) :
+	var newObject = object.duplicate()
+	newObject.connect("put_in_bag", self, "add_to_bag")
+	newObject.connect("remove_from_bag", self, "remove_from_bag")
+	BagObjectList.add_child(newObject)
+
+func remove_from_bag(object) :
+	for child in BagObjectList.get_children() :
+		if child.id == object.id :
+			child.queue_free()
+			break
+	
+	for child in ObjectList.get_children() :
+		if child.id == object.id :
+			child.in_bag = object.in_bag
+			child.refresh_bag()
+			break
 
 func _ready():
 	pass
