@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/fonts/title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/scripts/App.gd" type="Script" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://assets/icons/bag(1).svg" type="Texture" id=10]
 [ext_resource path="res://src/styles/main_button_style.tres" type="StyleBox" id=11]
 [ext_resource path="res://src/styles/main_buttion_hover.tres" type="StyleBox" id=12]
+[ext_resource path="res://assets/icons/warning.png" type="Texture" id=13]
+[ext_resource path="res://src/scripts/Indicator.gd" type="Script" id=14]
 
 [node name="App" type="Control"]
 anchor_right = 1.0
@@ -60,15 +62,68 @@ margin_left = 16.0
 margin_top = 16.0
 margin_right = 496.0
 margin_bottom = 56.0
+custom_constants/separation = 0
 alignment = 1
 
 [node name="Label" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
-margin_left = 161.0
-margin_right = 318.0
+margin_left = 78.0
+margin_right = 255.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Sac à dos"
+text = "Sac à dos ("
+
+[node name="BagCurrentWeight" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 255.0
+margin_right = 277.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0"
+
+[node name="Label2" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 277.0
+margin_right = 290.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "/"
+
+[node name="MaxBagWeight" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 290.0
+margin_right = 347.0
+margin_bottom = 40.0
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "100"
+
+[node name="Label3" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 347.0
+margin_right = 358.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = ")"
+
+[node name="MarginContainer" type="MarginContainer" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 358.0
+margin_right = 402.0
+margin_bottom = 40.0
+custom_constants/margin_right = 8
+custom_constants/margin_left = 8
+
+[node name="Indicator" type="TextureRect" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+margin_left = 8.0
+margin_top = 7.0
+margin_right = 36.0
+margin_bottom = 33.0
+size_flags_vertical = 4
+texture = ExtResource( 13 )
+script = ExtResource( 14 )
+
+[node name="Timer" type="Timer" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator"]
 
 [node name="TextureRect" type="TextureRect" parent="Bag/VBoxContainer"]
 margin_top = 64.0
@@ -289,6 +344,7 @@ text = "Générer"
 
 [node name="GenerationSettings" parent="." instance=ExtResource( 9 )]
 visible = false
+[connection signal="timeout" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator/Timer" to="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator" method="_on_Timer_timeout"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer/HBoxContainer/AddObjectButton" to="." method="_on_AddObjectButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/DeleteAllButton" to="." method="_on_DeleteAllButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/GenerationSettingsButton" to="." method="_on_GenerationSettingsButton_pressed"]
