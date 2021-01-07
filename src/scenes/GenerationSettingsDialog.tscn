@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/fonts/normal_large.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/fonts/normal_medium.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/scripts/GenerationSettingsDialog.gd" type="Script" id=3]
 
 [node name="GenerationSettings" type="AcceptDialog"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 179.0
@@ -11,6 +13,7 @@ margin_top = 162.0
 margin_right = -179.0
 margin_bottom = -162.0
 window_title = "Paramètres de génération d'objets"
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -47,7 +50,7 @@ margin_bottom = 30.0
 custom_fonts/font = ExtResource( 1 )
 text = "Nom de L'objet"
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="PrefixeEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 212.0
 margin_right = 362.0
 margin_bottom = 33.0
@@ -56,7 +59,7 @@ custom_fonts/font = ExtResource( 2 )
 text = "Objet"
 placeholder_text = "Préfixe"
 
-[node name="LineEdit2" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 378.0
 margin_right = 448.0
 margin_bottom = 33.0
@@ -65,7 +68,7 @@ text = "[ID]"
 align = 1
 editable = false
 
-[node name="LineEdit3" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="SuffixeEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 464.0
 margin_right = 614.0
 margin_bottom = 33.0
@@ -87,7 +90,7 @@ margin_bottom = 28.0
 custom_fonts/font = ExtResource( 1 )
 text = "Poids"
 
-[node name="SpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="MinWeightSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 254.0
 margin_right = 354.0
 margin_bottom = 28.0
@@ -95,7 +98,7 @@ rect_min_size = Vector2( 100, 0 )
 value = 1.0
 prefix = "min : "
 
-[node name="SpinBox2" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="MaxWeightSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 370.0
 margin_right = 470.0
 margin_bottom = 28.0
@@ -118,7 +121,7 @@ margin_bottom = 28.0
 custom_fonts/font = ExtResource( 1 )
 text = "Gain"
 
-[node name="SpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="MinGainSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_left = 248.0
 margin_right = 348.0
 margin_bottom = 28.0
@@ -126,7 +129,7 @@ rect_min_size = Vector2( 100, 0 )
 value = 1.0
 prefix = "min : "
 
-[node name="SpinBox2" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="MaxGainSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_left = 364.0
 margin_right = 464.0
 margin_bottom = 28.0
