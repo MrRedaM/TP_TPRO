@@ -12,8 +12,8 @@ onready var gainLabel = $MarginContainer/HBoxContainer/VBoxContainer/VBoxContain
 onready var bagButton = $MarginContainer/HBoxContainer/BagButton
 
 signal put_in_bag(object)
-
 signal remove_from_bag(object)
+signal delete(object)
 
 func refresh_bag() :
 	bagButton.pressed = in_bag
@@ -33,3 +33,7 @@ func _on_BagButton_toggled(button_pressed):
 	else :
 		in_bag = false
 		emit_signal("remove_from_bag", self)
+
+
+func _on_DeleteButton_pressed():
+	emit_signal("delete", self)

@@ -131,4 +131,5 @@ toggle_mode = true
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 8 )
 texture_hover = ExtResource( 7 )
+[connection signal="pressed" from="MarginContainer/HBoxContainer/DeleteButton" to="." method="_on_DeleteButton_pressed"]
 [connection signal="toggled" from="MarginContainer/HBoxContainer/BagButton" to="." method="_on_BagButton_toggled"]

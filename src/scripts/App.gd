@@ -26,6 +26,7 @@ func add_object(objectName, weight, gain):
 	object.gain = gain
 	object.connect("put_in_bag", self, "add_to_bag")
 	object.connect("remove_from_bag", self, "remove_from_bag")
+	object.connect("delete", self, "delete")
 	ObjectList.add_child(object)
 	object_count += 1
 	objects_number += 1
@@ -35,11 +36,20 @@ func delete_object(object) :
 	object.queue_free()
 	objects_number -= 1
 	ObjectsNumberLabel.text = "(" + String(objects_number) + ")"
+	
+	if object.in_bag :
+		for child in BagObjectList.get_children() :
+			if child.id == object.id :
+				child.queue_free()
+				bag_current_weight -= object.weight
+				update_weight()
+				break
 
 func add_to_bag(object) :
 	var newObject = object.duplicate()
 	newObject.connect("put_in_bag", self, "add_to_bag")
 	newObject.connect("remove_from_bag", self, "remove_from_bag")
+	newObject.connect("delete", self, "delete")
 	BagObjectList.add_child(newObject)
 	
 	bag_current_weight += object.weight
@@ -61,6 +71,12 @@ func remove_from_bag(object) :
 	
 	bag_current_weight -= object.weight
 	update_weight()
+
+func delete(object) :
+	for child in ObjectList.get_children() :
+		if child.id == object.id :
+			delete_object(child)
+			break
 
 func update_weight() :
 	BagCurrentWeight.text = String(bag_current_weight)
