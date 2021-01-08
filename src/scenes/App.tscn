@@ -234,7 +234,7 @@ text = "Remplir le sac"
 [node name="Objects" type="ColorRect" parent="."]
 anchor_right = 0.5
 anchor_bottom = 1.0
-color = Color( 0.0941176, 0.0823529, 0.0823529, 1 )
+color = Color( 0.137255, 0.101961, 0.0862745, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -388,7 +388,6 @@ text = "Générer"
 [node name="AddObjectDialog" parent="." instance=ExtResource( 8 )]
 
 [node name="GenerationSettings" parent="." instance=ExtResource( 9 )]
-visible = false
 
 [node name="MaxBagWeightDialog" parent="." instance=ExtResource( 15 )]
 [connection signal="gui_input" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MaxBagWeight" to="." method="_on_MaxBagWeight_gui_input"]
