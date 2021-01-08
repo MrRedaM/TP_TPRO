@@ -12,6 +12,7 @@
 [node name="Object" type="ColorRect"]
 anchor_right = 1.0
 rect_min_size = Vector2( 0, 100 )
+mouse_filter = 2
 color = Color( 0.145098, 0.145098, 0.164706, 0.901961 )
 script = ExtResource( 3 )
 __meta__ = {

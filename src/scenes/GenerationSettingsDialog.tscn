@@ -5,7 +5,6 @@
 [ext_resource path="res://src/scripts/GenerationSettingsDialog.gd" type="Script" id=3]
 
 [node name="GenerationSettings" type="AcceptDialog"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 179.0
@@ -84,25 +83,25 @@ custom_constants/separation = 16
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 180.0
-margin_right = 238.0
+margin_left = 130.0
+margin_right = 188.0
 margin_bottom = 28.0
 custom_fonts/font = ExtResource( 1 )
 text = "Poids"
 
 [node name="MinWeightSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 254.0
+margin_left = 204.0
 margin_right = 354.0
 margin_bottom = 28.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 150, 0 )
 value = 1.0
 prefix = "min : "
 
 [node name="MaxWeightSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 370.0
-margin_right = 470.0
+margin_right = 520.0
 margin_bottom = 28.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 150, 0 )
 value = 100.0
 allow_greater = true
 prefix = "max : "
@@ -115,25 +114,25 @@ custom_constants/separation = 16
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
-margin_left = 185.0
-margin_right = 232.0
+margin_left = 135.0
+margin_right = 182.0
 margin_bottom = 28.0
 custom_fonts/font = ExtResource( 1 )
 text = "Gain"
 
 [node name="MinGainSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
-margin_left = 248.0
+margin_left = 198.0
 margin_right = 348.0
 margin_bottom = 28.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 150, 0 )
 value = 1.0
 prefix = "min : "
 
 [node name="MaxGainSpin" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_left = 364.0
-margin_right = 464.0
+margin_right = 514.0
 margin_bottom = 28.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 150, 0 )
 value = 100.0
 allow_greater = true
 prefix = "max : "

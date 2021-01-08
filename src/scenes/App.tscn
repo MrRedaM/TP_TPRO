@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/fonts/title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/scripts/App.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://src/styles/main_buttion_hover.tres" type="StyleBox" id=12]
 [ext_resource path="res://assets/icons/warning.png" type="Texture" id=13]
 [ext_resource path="res://src/scripts/Indicator.gd" type="Script" id=14]
+[ext_resource path="res://src/scenes/MaxBagWeightDialog.tscn" type="PackedScene" id=15]
 
 [node name="App" type="Control"]
 anchor_right = 1.0
@@ -66,32 +67,31 @@ custom_constants/separation = 0
 alignment = 1
 
 [node name="Label" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
-margin_left = 78.0
-margin_right = 255.0
+margin_right = 79.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Sac à dos ("
+text = "Sac ("
 
 [node name="BagCurrentWeight" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
-margin_left = 255.0
-margin_right = 277.0
+margin_left = 79.0
+margin_right = 101.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 
 [node name="Label2" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
-margin_left = 277.0
-margin_right = 290.0
+margin_left = 101.0
+margin_right = 114.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "/"
 
 [node name="MaxBagWeight" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
-margin_left = 290.0
-margin_right = 347.0
+margin_left = 114.0
+margin_right = 171.0
 margin_bottom = 40.0
 mouse_filter = 0
 mouse_default_cursor_shape = 2
@@ -100,16 +100,16 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "100"
 
 [node name="Label3" type="Label" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
-margin_left = 347.0
-margin_right = 358.0
+margin_left = 171.0
+margin_right = 182.0
 margin_bottom = 40.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = ")"
 
 [node name="MarginContainer" type="MarginContainer" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
-margin_left = 358.0
-margin_right = 402.0
+margin_left = 182.0
+margin_right = 226.0
 margin_bottom = 40.0
 custom_constants/margin_right = 8
 custom_constants/margin_left = 8
@@ -125,8 +125,50 @@ script = ExtResource( 14 )
 
 [node name="Timer" type="Timer" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator"]
 
-[node name="TextureRect" type="TextureRect" parent="Bag/VBoxContainer"]
+[node name="Control" type="Control" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 226.0
+margin_right = 350.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="EmptyBag" type="Button" parent="Bag/VBoxContainer/MarginContainer/HBoxContainer"]
+margin_left = 350.0
+margin_right = 480.0
+margin_bottom = 40.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Vider le sac"
+
+[node name="MarginContainer3" type="MarginContainer" parent="Bag/VBoxContainer"]
 margin_top = 64.0
+margin_right = 512.0
+margin_bottom = 104.0
+custom_constants/margin_right = 16
+custom_constants/margin_left = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bag/VBoxContainer/MarginContainer3"]
+margin_left = 16.0
+margin_right = 496.0
+margin_bottom = 40.0
+
+[node name="Label4" type="Label" parent="Bag/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_top = 6.0
+margin_right = 117.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Gain total : "
+
+[node name="TotalGain" type="Label" parent="Bag/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_left = 121.0
+margin_right = 143.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.223529, 0.372549, 0.831373, 1 )
+text = "0"
+
+[node name="TextureRect" type="TextureRect" parent="Bag/VBoxContainer"]
+margin_top = 104.0
 margin_right = 512.0
 margin_bottom = 540.0
 size_flags_vertical = 3
@@ -151,7 +193,7 @@ __meta__ = {
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 496.0
-margin_bottom = 460.0
+margin_bottom = 420.0
 color = Color( 0, 0, 0, 0.196078 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Bag/VBoxContainer/TextureRect/MarginContainer/ColorRect"]
@@ -163,7 +205,7 @@ __meta__ = {
 
 [node name="BagObjectList" type="VBoxContainer" parent="Bag/VBoxContainer/TextureRect/MarginContainer/ColorRect/ScrollContainer"]
 margin_right = 480.0
-margin_bottom = 444.0
+margin_bottom = 404.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -181,8 +223,9 @@ margin_left = 16.0
 margin_top = 8.0
 margin_right = 496.0
 margin_bottom = 44.0
-custom_styles/hover = ExtResource( 12 )
-custom_styles/pressed = ExtResource( 11 )
+mouse_default_cursor_shape = 2
+custom_styles/hover = ExtResource( 11 )
+custom_styles/pressed = ExtResource( 12 )
 custom_styles/normal = ExtResource( 11 )
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -304,6 +347,7 @@ alignment = 1
 [node name="DeleteAllButton" type="Button" parent="Objects/VBoxContainer/MarginContainer2/HBoxContainer"]
 margin_right = 170.0
 margin_bottom = 34.0
+mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 3 )
 text = "Tout supprimer"
 
@@ -337,6 +381,7 @@ align = 1
 margin_left = 386.0
 margin_right = 480.0
 margin_bottom = 34.0
+mouse_default_cursor_shape = 2
 custom_fonts/font = ExtResource( 3 )
 text = "Générer"
 
@@ -344,9 +389,14 @@ text = "Générer"
 
 [node name="GenerationSettings" parent="." instance=ExtResource( 9 )]
 visible = false
+
+[node name="MaxBagWeightDialog" parent="." instance=ExtResource( 15 )]
+[connection signal="gui_input" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MaxBagWeight" to="." method="_on_MaxBagWeight_gui_input"]
 [connection signal="timeout" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator/Timer" to="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator" method="_on_Timer_timeout"]
+[connection signal="pressed" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/EmptyBag" to="." method="_on_EmptyBag_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer/HBoxContainer/AddObjectButton" to="." method="_on_AddObjectButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/DeleteAllButton" to="." method="_on_DeleteAllButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/GenerationSettingsButton" to="." method="_on_GenerationSettingsButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/GenerateButton" to="." method="_on_GenerateButton_pressed"]
 [connection signal="confirmed" from="AddObjectDialog" to="." method="_on_AddObjectDialog_confirmed"]
+[connection signal="confirmed" from="MaxBagWeightDialog" to="." method="_on_MaxBagWeightDialog_confirmed"]
