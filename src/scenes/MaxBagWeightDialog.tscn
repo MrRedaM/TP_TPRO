@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/normal_large.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/scripts/MaxBagWeightDialog.gd" type="Script" id=2]
+
+[node name="MaxBagWeightDialog" type="AcceptDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 307.0
+margin_top = 251.0
+margin_right = -308.0
+margin_bottom = -251.0
+window_title = "Changer poids max"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+custom_constants/separation = 16
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+margin_left = 22.0
+margin_top = 13.0
+margin_right = 204.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 1 )
+text = "Poids max du sac"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer2"]
+margin_left = 220.0
+margin_top = 15.0
+margin_right = 370.0
+margin_bottom = 39.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_vertical = 4
+value = 100.0
+allow_greater = true
