@@ -218,7 +218,7 @@ custom_constants/margin_top = 8
 custom_constants/margin_left = 16
 custom_constants/margin_bottom = 16
 
-[node name="Button" type="Button" parent="Bag/VBoxContainer/MarginContainer2"]
+[node name="FillButton" type="Button" parent="Bag/VBoxContainer/MarginContainer2"]
 margin_left = 16.0
 margin_top = 8.0
 margin_right = 496.0
@@ -393,6 +393,7 @@ text = "Générer"
 [connection signal="gui_input" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MaxBagWeight" to="." method="_on_MaxBagWeight_gui_input"]
 [connection signal="timeout" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator/Timer" to="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator" method="_on_Timer_timeout"]
 [connection signal="pressed" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/EmptyBag" to="." method="_on_EmptyBag_pressed"]
+[connection signal="pressed" from="Bag/VBoxContainer/MarginContainer2/FillButton" to="." method="_on_FillButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer/HBoxContainer/AddObjectButton" to="." method="_on_AddObjectButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/DeleteAllButton" to="." method="_on_DeleteAllButton_pressed"]
 [connection signal="pressed" from="Objects/VBoxContainer/MarginContainer2/HBoxContainer/GenerationSettingsButton" to="." method="_on_GenerationSettingsButton_pressed"]

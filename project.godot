@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="TP TPRO"
+config/name="Knapsack Problem"
 run/main_scene="res://src/scenes/App.tscn"
 config/icon="res://icon.png"
 

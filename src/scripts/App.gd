@@ -21,6 +21,76 @@ var bag_max_weight = 100
 var bag_current_weight = 0
 var bag_total_gain = 0
 
+
+func fill_bag():
+	var objects = []
+	print(get_items_without_opt(ObjectList.get_child_count(), bag_max_weight, objects))
+	#print(get_items_without_opt(ObjectList.get_child_count(), bag_max_weight))
+	for o in objects:
+		add_to_bag(o)
+
+#recursive solution without optimisation
+func get_bag_items_without_opt(i, w, result):
+	if i == 0 or w == 0:
+		result = []
+		return result
+	if ObjectList.get_children()[i-1].weight > w:
+		get_bag_items_without_opt(i-1, w, result)
+		return result
+	if result == null:
+		result = []
+	if value(get_bag_items_without_opt(i-1, w, result)) < (value(get_bag_items_without_opt(i-1, w - ObjectList.get_children()[i-1].weight,  result)) + ObjectList.get_children()[i-1].gain):
+		result.append(ObjectList.get_children()[i-1])
+	return result
+
+func get_items_without_opt(i, w, objects):
+	if i == 0 or w == 0:
+		objects = []
+		return 0
+	elif ObjectList.get_children()[i-1].weight > w:
+		get_items_without_opt(i-1, w, objects)
+	else:
+		var object = ObjectList.get_children()[i-1]
+		var weight = object.weight
+		var gain = object.gain
+		if objects == null:
+			objects = []
+		var s1 = get_items_without_opt(i-1, w, objects)
+		var s2 = get_items_without_opt(i-1, w - weight, objects)
+		if s2 == null:
+			s2 = 0
+		if s1 == null:
+			s1 = 0
+		if s1 < (s2 + gain) and not objects.has(object):
+			objects.append(object)
+		#else :
+		#	objects.remove(objects.find(object))
+		return max(s1, s2 + gain)
+
+#func get_items_without_opt(i, w):
+#	if i == 0 or w == 0:
+#		return 0
+#	elif ObjectList.get_children()[i-1].weight > w:
+#		get_items_without_opt(i-1, w)
+#	else:
+#		var weight = ObjectList.get_children()[i-1].weight
+#		var gain = ObjectList.get_children()[i-1].gain
+#		var s1 = get_items_without_opt(i-1, w)
+#		var s2 = get_items_without_opt(i-1, w - weight)
+#		if s2 == null:
+#			s2 = 0
+#		if s1 == null:
+#			s1 = 0
+#		return max(s1, s2 + gain)
+
+func value(object_list) -> int:
+	if object_list == null:
+		return 0
+	var somme = 0
+	for o in object_list:
+		somme += o.gain
+	return somme
+
 func add_object(objectName, weight, gain):
 	var object = Objet.instance()
 	object.id = object_count
@@ -168,3 +238,8 @@ func _on_MaxBagWeight_gui_input(event):
 func _on_MaxBagWeightDialog_confirmed():
 	bag_max_weight = MaxWeightDialog.get_max_weight()
 	update_max_weight()
+
+
+func _on_FillButton_pressed():
+	_on_EmptyBag_pressed()
+	fill_bag()
