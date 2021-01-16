@@ -15,6 +15,7 @@ onready var Indicator = $Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginC
 onready var TotalGainLabes = $Bag/VBoxContainer/MarginContainer3/HBoxContainer/TotalGain
 onready var LoadingParticles = $WaitScreen/VBoxContainer/TextureRect/CenterContainer/Particles2D
 onready var CaseNumber = $WaitScreen/VBoxContainer/CaseNumber
+onready var WaitTimer = $WaitScreen/VBoxContainer/WaitTimer
 
 export var use_thread = false
 
@@ -248,6 +249,8 @@ func _on_FillButton_pressed():
 
 func _on_Wait_Screen_animation_finished(anim_name):
 	if processing:
+		if use_thread:
+			$WaitScreen.start_timer()
 		fill_bag()
 	else:
 		$WaitScreen.visible = false
@@ -258,6 +261,8 @@ func _on_CheckButton_toggled(button_pressed):
 	if button_pressed:
 		use_thread = true
 		LoadingParticles.visible = true
+		WaitTimer.visible = true
 	else:
 		use_thread = false
 		LoadingParticles.visible = false
+		WaitTimer.visible = false
