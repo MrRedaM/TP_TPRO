@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/fonts/title.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/scripts/App.gd" type="Script" id=2]
@@ -19,6 +19,9 @@
 [ext_resource path="res://assets/icons/bag_loading.png" type="Texture" id=17]
 [ext_resource path="res://src/scripts/WaitScreen.gd" type="Script" id=18]
 [ext_resource path="res://assets/fonts/normal_medium.tres" type="DynamicFont" id=19]
+[ext_resource path="res://src/scripts/AlgoSelector.gd" type="Script" id=20]
+[ext_resource path="res://assets/fonts/normal_small.tres" type="DynamicFont" id=21]
+[ext_resource path="res://src/scripts/Toast.gd" type="Script" id=22]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 1.4, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -64,6 +67,41 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.454902, 0, 0, 1 )
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 10
+
+[sub_resource type="Animation" id=6]
+resource_name = "Show"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, -100 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
@@ -278,7 +316,7 @@ margin_right = 496.0
 margin_bottom = 48.0
 
 [node name="FillButton" type="Button" parent="Bag/VBoxContainer/MarginContainer2/HBoxContainer"]
-margin_right = 332.0
+margin_right = 299.0
 margin_bottom = 40.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
@@ -288,10 +326,13 @@ custom_styles/normal = ExtResource( 11 )
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Remplir le sac"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="CheckButton" type="CheckButton" parent="Bag/VBoxContainer/MarginContainer2/HBoxContainer"]
-margin_left = 336.0
-margin_right = 480.0
+margin_left = 303.0
+margin_right = 447.0
 margin_bottom = 40.0
 hint_tooltip = "Utiliser un thread pour calculer en arrière plan (sans figer l'app)
 !! NE MARCHE PAS SUR TOUS LES PLATEFORMES !!"
@@ -301,6 +342,14 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "Thread"
+
+[node name="AlgoSelector" type="OptionButton" parent="Bag/VBoxContainer/MarginContainer2/HBoxContainer"]
+margin_left = 451.0
+margin_right = 480.0
+margin_bottom = 40.0
+hint_tooltip = "Choisir l'algorithme de remplissage"
+custom_fonts/font = ExtResource( 21 )
+script = ExtResource( 20 )
 
 [node name="Objects" type="ColorRect" parent="."]
 anchor_right = 0.5
@@ -584,6 +633,46 @@ align = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="WaitScreen"]
 anims/Show = SubResource( 4 )
+
+[node name="Toast" type="MarginContainer" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+margin_top = -100.0
+margin_bottom = 14.0
+custom_constants/margin_right = 32
+custom_constants/margin_top = 32
+custom_constants/margin_left = 32
+custom_constants/margin_bottom = 32
+script = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Panel" type="Panel" parent="Toast"]
+margin_left = 32.0
+margin_top = 32.0
+margin_right = 992.0
+margin_bottom = 82.0
+rect_min_size = Vector2( 0, 50 )
+custom_styles/panel = SubResource( 5 )
+
+[node name="Label" type="Label" parent="Toast/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 3 )
+text = "Message"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Toast"]
+anims/Show = SubResource( 6 )
+
+[node name="Timer" type="Timer" parent="Toast"]
 [connection signal="gui_input" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MaxBagWeight" to="." method="_on_MaxBagWeight_gui_input"]
 [connection signal="timeout" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator/Timer" to="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator" method="_on_Timer_timeout"]
 [connection signal="pressed" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/EmptyBag" to="." method="_on_EmptyBag_pressed"]
@@ -597,3 +686,5 @@ anims/Show = SubResource( 4 )
 [connection signal="confirmed" from="MaxBagWeightDialog" to="." method="_on_MaxBagWeightDialog_confirmed"]
 [connection signal="timeout" from="WaitScreen/VBoxContainer/WaitTimer/Timer" to="WaitScreen" method="_on_Timer_timeout"]
 [connection signal="animation_finished" from="WaitScreen/AnimationPlayer" to="." method="_on_Wait_Screen_animation_finished"]
+[connection signal="animation_finished" from="Toast/AnimationPlayer" to="Toast" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="Toast/Timer" to="Toast" method="_on_Timer_timeout"]

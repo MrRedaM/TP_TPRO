@@ -16,6 +16,7 @@ onready var TotalGainLabes = $Bag/VBoxContainer/MarginContainer3/HBoxContainer/T
 onready var LoadingParticles = $WaitScreen/VBoxContainer/TextureRect/CenterContainer/Particles2D
 onready var CaseNumber = $WaitScreen/VBoxContainer/CaseNumber
 onready var WaitTimer = $WaitScreen/VBoxContainer/WaitTimer
+onready var Toast = $Toast
 
 export var use_thread = false
 
@@ -37,6 +38,7 @@ func fill_bag():
 		else:
 			processing = false
 			$WaitScreen.hide()
+			Toast.show_message("Erreur avec le thread. Veuillez désactiver le thread")
 	else:
 		fill_in(objects)
 
