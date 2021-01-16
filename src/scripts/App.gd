@@ -23,25 +23,33 @@ var bag_total_gain = 0
 
 
 func fill_bag():
-	var objects = []
-	print(get_items_without_opt(ObjectList.get_child_count(), bag_max_weight, objects))
+	#var objects = []
+	var n = ObjectList.get_child_count()
+	var objects = get_bag_items_without_opt(n, bag_max_weight)
+	#print(get_items_without_opt(ObjectList.get_child_count(), bag_max_weight, objects))
 	#print(get_items_without_opt(ObjectList.get_child_count(), bag_max_weight))
 	for o in objects:
-		add_to_bag(o)
+		if o != null:
+			add_to_bag(o)
 
 #recursive solution without optimisation
-func get_bag_items_without_opt(i, w, result):
+func get_bag_items_without_opt(i, w):
 	if i == 0 or w == 0:
-		result = []
-		return result
-	if ObjectList.get_children()[i-1].weight > w:
-		get_bag_items_without_opt(i-1, w, result)
-		return result
-	if result == null:
-		result = []
-	if value(get_bag_items_without_opt(i-1, w, result)) < (value(get_bag_items_without_opt(i-1, w - ObjectList.get_children()[i-1].weight,  result)) + ObjectList.get_children()[i-1].gain):
-		result.append(ObjectList.get_children()[i-1])
-	return result
+		return []
+	var object = ObjectList.get_children()[i-1]
+	var weight = object.weight
+	var gain = object.gain
+	if weight > w:
+		return get_bag_items_without_opt(i-1, w)
+	var s1 = get_bag_items_without_opt(i-1, w)
+	var s2 = get_bag_items_without_opt(i-1, w - weight)
+	var l = [object]
+	for o in s2:
+		l.append(o)
+	if value(s1) > (value(s2) + gain):
+		return s1
+	else:
+		return l
 
 func get_items_without_opt(i, w, objects):
 	if i == 0 or w == 0:
