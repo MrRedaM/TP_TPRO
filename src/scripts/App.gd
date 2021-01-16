@@ -13,6 +13,10 @@ onready var BagCurrentWeight = $Bag/VBoxContainer/MarginContainer/HBoxContainer/
 onready var BagMaxWeightLabel = $Bag/VBoxContainer/MarginContainer/HBoxContainer/MaxBagWeight
 onready var Indicator = $Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator
 onready var TotalGainLabes = $Bag/VBoxContainer/MarginContainer3/HBoxContainer/TotalGain
+onready var LoadingParticles = $WaitScreen/VBoxContainer/TextureRect/CenterContainer/Particles2D
+onready var CaseNumber = $WaitScreen/VBoxContainer/CaseNumber
+
+export var use_thread = false
 
 var object_count = 1
 var objects_number = 0
@@ -21,16 +25,27 @@ var bag_max_weight = 100
 var bag_current_weight = 0
 var bag_total_gain = 0
 
+var processing = false
+var thread = Thread.new()
 
 func fill_bag():
-	#var objects = []
-	var n = ObjectList.get_child_count()
-	var objects = get_bag_items_without_opt(n, bag_max_weight)
-	#print(get_items_without_opt(ObjectList.get_child_count(), bag_max_weight, objects))
-	#print(get_items_without_opt(ObjectList.get_child_count(), bag_max_weight))
-	for o in objects:
+	var objects = []
+	if use_thread:
+		if not thread.is_active():
+			thread.start(self, "fill_in", objects)
+		else:
+			processing = false
+			$WaitScreen.hide()
+	else:
+		fill_in(objects)
+
+func fill_in(list):
+	list = get_bag_items_without_opt(ObjectList.get_child_count(), bag_max_weight)
+	for o in list:
 		if o != null:
 			add_to_bag(o)
+	processing = false
+	$WaitScreen.hide()
 
 #recursive solution without optimisation
 func get_bag_items_without_opt(i, w):
@@ -51,45 +66,21 @@ func get_bag_items_without_opt(i, w):
 	else:
 		return l
 
-func get_items_without_opt(i, w, objects):
+func get_max_value(i, w):
 	if i == 0 or w == 0:
-		objects = []
 		return 0
 	elif ObjectList.get_children()[i-1].weight > w:
-		get_items_without_opt(i-1, w, objects)
+		return get_max_value(i-1, w)
 	else:
-		var object = ObjectList.get_children()[i-1]
-		var weight = object.weight
-		var gain = object.gain
-		if objects == null:
-			objects = []
-		var s1 = get_items_without_opt(i-1, w, objects)
-		var s2 = get_items_without_opt(i-1, w - weight, objects)
-		if s2 == null:
-			s2 = 0
-		if s1 == null:
-			s1 = 0
-		if s1 < (s2 + gain) and not objects.has(object):
-			objects.append(object)
-		#else :
-		#	objects.remove(objects.find(object))
-		return max(s1, s2 + gain)
-
-#func get_items_without_opt(i, w):
-#	if i == 0 or w == 0:
-#		return 0
-#	elif ObjectList.get_children()[i-1].weight > w:
-#		get_items_without_opt(i-1, w)
-#	else:
-#		var weight = ObjectList.get_children()[i-1].weight
-#		var gain = ObjectList.get_children()[i-1].gain
-#		var s1 = get_items_without_opt(i-1, w)
-#		var s2 = get_items_without_opt(i-1, w - weight)
+		var weight = ObjectList.get_children()[i-1].weight
+		var gain = ObjectList.get_children()[i-1].gain
+		var s1 = get_max_value(i-1, w)
+		var s2 = get_max_value(i-1, w - weight)
 #		if s2 == null:
 #			s2 = 0
 #		if s1 == null:
 #			s1 = 0
-#		return max(s1, s2 + gain)
+		return max(s1, s2 + gain)
 
 func value(object_list) -> int:
 	if object_list == null:
@@ -249,5 +240,24 @@ func _on_MaxBagWeightDialog_confirmed():
 
 
 func _on_FillButton_pressed():
+	processing = true
+	$WaitScreen.visible = true
+	$WaitScreen.show()
 	_on_EmptyBag_pressed()
-	fill_bag()
+
+
+func _on_Wait_Screen_animation_finished(anim_name):
+	if processing:
+		fill_bag()
+	else:
+		$WaitScreen.visible = false
+		print(thread.is_active())
+
+
+func _on_CheckButton_toggled(button_pressed):
+	if button_pressed:
+		use_thread = true
+		LoadingParticles.visible = true
+	else:
+		use_thread = false
+		LoadingParticles.visible = false
