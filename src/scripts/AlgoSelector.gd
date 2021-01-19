@@ -13,7 +13,6 @@ func _ready():
 func _init_items():
 	add_item("Récursif brut", 0)
 	add_item("Récursif dynamique", 1)
-	set_item_disabled(1, true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

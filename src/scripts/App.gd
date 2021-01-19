@@ -17,6 +17,7 @@ onready var LoadingParticles = $WaitScreen/VBoxContainer/TextureRect/CenterConta
 onready var CaseNumber = $WaitScreen/VBoxContainer/CaseNumber
 onready var WaitTimer = $WaitScreen/VBoxContainer/WaitTimer
 onready var Toast = $Toast
+onready var AlgoSelect = $Bag/VBoxContainer/MarginContainer2/HBoxContainer/AlgoSelector
 
 export var use_thread = false
 
@@ -43,7 +44,24 @@ func fill_bag():
 		fill_in(objects)
 
 func fill_in(list):
-	list = get_bag_items_without_opt(ObjectList.get_child_count(), bag_max_weight)
+	var nb_objects = ObjectList.get_child_count()
+	match AlgoSelect.selected:
+		0:#recursive without optimisation
+			print("rec brut")
+			list = get_bag_items_without_opt(nb_objects, bag_max_weight)
+		1:#recursive with optimisation
+			print("rec opt")
+			var save = []
+			if nb_objects == 0:
+				save.append([])
+				for y in range(bag_max_weight):
+					save[0].append(null)
+			for x in range(nb_objects):
+				save.append([])
+				for y in range(bag_max_weight):
+					save[x].append(null)
+			list = get_bag_items(nb_objects, bag_max_weight, save)
+	
 	for o in list:
 		if o != null:
 			#add_to_bag(o)
@@ -70,6 +88,29 @@ func get_bag_items_without_opt(i, w):
 	else:
 		return l
 
+#recursive solution with dynamic programming optimisation
+func get_bag_items(i, w, save):
+	if save[i-1][w-1] != null:
+		return save[i][w]
+	if i == 0 or w == 0:
+		return []
+	var object = ObjectList.get_children()[i-1]
+	var weight = object.weight
+	var gain = object.gain
+	if weight > w:
+		return get_bag_items_without_opt(i-1, w)
+	var s1 = get_bag_items_without_opt(i-1, w)
+	var s2 = get_bag_items_without_opt(i-1, w - weight)
+	var l = [object]
+	for o in s2:
+		l.append(o)
+	if value(s1) > (value(s2) + gain):
+		save[i-1][w-1] = s1
+		return s1
+	else:
+		save[i-1][w-1] = l
+		return l
+
 func get_max_value(i, w):
 	if i == 0 or w == 0:
 		return 0
@@ -80,10 +121,6 @@ func get_max_value(i, w):
 		var gain = ObjectList.get_children()[i-1].gain
 		var s1 = get_max_value(i-1, w)
 		var s2 = get_max_value(i-1, w - weight)
-#		if s2 == null:
-#			s2 = 0
-#		if s1 == null:
-#			s1 = 0
 		return max(s1, s2 + gain)
 
 func value(object_list) -> int:
@@ -257,7 +294,6 @@ func _on_Wait_Screen_animation_finished(anim_name):
 		fill_bag()
 	else:
 		$WaitScreen.visible = false
-		print(thread.is_active())
 
 
 func _on_CheckButton_toggled(button_pressed):
