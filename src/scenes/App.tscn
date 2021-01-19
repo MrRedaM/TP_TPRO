@@ -258,6 +258,39 @@ custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.223529, 0.372549, 0.831373, 1 )
 text = "0"
 
+[node name="Control" type="Control" parent="Bag/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_left = 147.0
+margin_right = 292.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Label5" type="Label" parent="Bag/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_left = 296.0
+margin_top = 6.0
+margin_right = 433.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "T.exécution : "
+
+[node name="ExecTime" type="Label" parent="Bag/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_left = 437.0
+margin_top = 6.0
+margin_right = 451.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0"
+
+[node name="Label6" type="Label" parent="Bag/VBoxContainer/MarginContainer3/HBoxContainer"]
+margin_left = 455.0
+margin_top = 6.0
+margin_right = 480.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "(s)"
+
 [node name="TextureRect" type="TextureRect" parent="Bag/VBoxContainer"]
 margin_top = 104.0
 margin_right = 512.0

@@ -18,6 +18,7 @@ onready var CaseNumber = $WaitScreen/VBoxContainer/CaseNumber
 onready var WaitTimer = $WaitScreen/VBoxContainer/WaitTimer
 onready var Toast = $Toast
 onready var AlgoSelect = $Bag/VBoxContainer/MarginContainer2/HBoxContainer/AlgoSelector
+onready var ExecTimeLabel = $Bag/VBoxContainer/MarginContainer3/HBoxContainer/ExecTime
 
 export var use_thread = false
 
@@ -28,6 +29,7 @@ var bag_max_weight = 100
 var bag_current_weight = 0
 var bag_total_gain = 0
 
+var exec_time : float = 0 #seconds
 var processing = false
 var thread = Thread.new()
 
@@ -47,10 +49,12 @@ func fill_in(list):
 	var nb_objects = ObjectList.get_child_count()
 	match AlgoSelect.selected:
 		0:#recursive without optimisation
-			print("rec brut")
+			var start = OS.get_system_time_msecs()
 			list = get_bag_items_without_opt(nb_objects, bag_max_weight)
+			var end  = OS.get_system_time_msecs()
+			exec_time = end - start
 		1:#recursive with optimisation
-			print("rec opt")
+			var start = OS.get_system_time_msecs()
 			var save = []
 			if nb_objects == 0:
 				save.append([])
@@ -61,7 +65,10 @@ func fill_in(list):
 				for y in range(bag_max_weight):
 					save[x].append(null)
 			list = get_bag_items(nb_objects, bag_max_weight, save)
+			var end  = OS.get_system_time_msecs()
+			exec_time = end - start
 	
+	update_exec_time()
 	for o in list:
 		if o != null:
 			#add_to_bag(o)
@@ -90,8 +97,9 @@ func get_bag_items_without_opt(i, w):
 
 #recursive solution with dynamic programming optimisation
 func get_bag_items(i, w, save):
-	if save[i-1][w-1] != null:
-		return save[i][w]
+	var mem = save[i-1][w-1] 
+	if mem != null:
+		return mem
 	if i == 0 or w == 0:
 		return []
 	var object = ObjectList.get_children()[i-1]
@@ -212,9 +220,8 @@ func update_max_weight() :
 func update_gain() :
 	TotalGainLabes.text = String(bag_total_gain)
 
-func _ready():
-	pass
-
+func update_exec_time():
+	ExecTimeLabel.text = comma_sep(exec_time)
 
 func _on_AddObjectButton_pressed():
 	AddObjectDialog.popup_centered()
@@ -305,3 +312,15 @@ func _on_CheckButton_toggled(button_pressed):
 		use_thread = false
 		LoadingParticles.visible = false
 		WaitTimer.visible = false
+
+func comma_sep(number):
+	var string = str(number)
+	var mod = string.length() % 3
+	var res = ""
+	
+	for i in range(0, string.length()):
+		if i != 0 && i % 3 == mod:
+			res += ","
+		res += string[i]
+	
+	return res
