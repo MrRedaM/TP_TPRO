@@ -46,7 +46,8 @@ func fill_in(list):
 	list = get_bag_items_without_opt(ObjectList.get_child_count(), bag_max_weight)
 	for o in list:
 		if o != null:
-			add_to_bag(o)
+			#add_to_bag(o)
+			o.set_in_bag(true)
 	processing = false
 	$WaitScreen.hide()
 

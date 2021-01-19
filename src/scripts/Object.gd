@@ -19,6 +19,9 @@ func refresh_bag() :
 	bagButton.pressed = in_bag
 	pass
 
+func set_in_bag(bag):
+	bagButton.pressed = bag
+
 func _ready():
 	objectNameLabel.text = String(object_name)
 	weightLabel.text = String(weight)
