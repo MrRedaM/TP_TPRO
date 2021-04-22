@@ -23,5 +23,5 @@ func _on_Timer_timeout():
 	if seconds == 60:
 		minutes += 1
 		seconds = 0
-	$VBoxContainer/WaitTimer/TimerMinutes.text = "0" + String(minutes)
-	$VBoxContainer/WaitTimer/TimerSeconds.text = "0" + String(seconds)
+	$VBoxContainer/WaitTimer/TimerMinutes.text = "%02d" % minutes
+	$VBoxContainer/WaitTimer/TimerSeconds.text = "%02d" % seconds

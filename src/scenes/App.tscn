@@ -706,6 +706,7 @@ __meta__ = {
 anims/Show = SubResource( 6 )
 
 [node name="Timer" type="Timer" parent="Toast"]
+
 [connection signal="gui_input" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MaxBagWeight" to="." method="_on_MaxBagWeight_gui_input"]
 [connection signal="timeout" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator/Timer" to="Bag/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/Indicator" method="_on_Timer_timeout"]
 [connection signal="pressed" from="Bag/VBoxContainer/MarginContainer/HBoxContainer/EmptyBag" to="." method="_on_EmptyBag_pressed"]
