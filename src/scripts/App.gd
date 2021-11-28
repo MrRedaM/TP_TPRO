@@ -1,5 +1,7 @@
 extends Control
 
+signal done()
+
 const Objet = preload("res://src/scenes/Object.tscn")
 
 onready var ObjectList = $Objects/VBoxContainer/MarginContainer3/MarginContainer2/ScrollContainer/ObjectList
@@ -20,7 +22,7 @@ onready var Toast = $Toast
 onready var AlgoSelect = $Bag/VBoxContainer/MarginContainer2/HBoxContainer/AlgoSelector
 onready var ExecTimeLabel = $Bag/VBoxContainer/MarginContainer3/HBoxContainer/ExecTime
 
-export var use_thread = false
+export var use_thread = true
 
 var object_count = 1
 var objects_number = 0
@@ -34,16 +36,19 @@ var processing = false
 var thread = Thread.new()
 
 func fill_bag():
+	thread = Thread.new()
 	var objects = []
 	if use_thread:
-		if not thread.is_active():
+		if not thread.is_alive():
 			thread.start(self, "fill_in", objects)
+			yield(self, "done")
 		else:
 			processing = false
 			$WaitScreen.hide()
 			Toast.show_message("Erreur avec le thread. Veuillez désactiver le thread")
 	else:
 		fill_in(objects)
+	$WaitScreen.hide()
 
 func fill_in(list):
 	var nb_objects = ObjectList.get_child_count()
@@ -67,14 +72,13 @@ func fill_in(list):
 			list = get_bag_items(nb_objects, bag_max_weight, save)
 			var end  = OS.get_system_time_msecs()
 			exec_time = end - start
-	
 	update_exec_time()
 	for o in list:
 		if o != null:
 			#add_to_bag(o)
 			o.set_in_bag(true)
 	processing = false
-	$WaitScreen.hide()
+	call_deferred("emit_signal", "done")
 
 #recursive solution without optimisation
 func get_bag_items_without_opt(i, w):
